@@ -8,7 +8,7 @@ from random import uniform, choice
 from utils.method.data_treatment import create_matches
 from utils.method.evaluate import format_duration  # Add this import
 
-def find_optimal_path(jobs, workers, num_ants, initial_pheromone, alpha=3.875, beta=1, evap_coeff=0.5, Q=jobs, iterations=50, verbose=0):
+def find_optimal_path(jobs, workers, num_ants=6, initial_pheromone=0.398, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=0.237, iterations=10, verbose=0):
     """
     Executes the ACO function multiple times to find the best path with the lowest total duration.
     
@@ -145,7 +145,7 @@ def random_search_ACO(jobs, workers, param_ranges, num_trials=100, max_iteration
     for _ in tqdm(range(num_trials), desc="Random Search Trials"):
         # Randomly sample parameter values from the given ranges
         initial_pheromone = uniform(*param_ranges['initial_pheromones'])
-        num_ants = int(choice(range(param_ranges['num_ant_list'][0], param_ranges['num_ant_list'][1]+1)))
+        num_ants = int(choice(range(param_ranges['num_ants_list'][0], param_ranges['num_ants_list'][1]+1)))
         alpha = uniform(*param_ranges['alpha_values'])
         beta = uniform(*param_ranges['beta_values'])
         evap_coeff = uniform(*param_ranges['evap_coeffs'])
@@ -200,7 +200,7 @@ def define_random_search_ranges(jobs):
     # Define parameter ranges
     param_ranges = {
         'initial_pheromones': (0.1, 1.0),  # τ₀ from 0.1 to 1.0
-        'num_ants_list': (3, 2 * N),  # Number of ants from N to 2N
+        'num_ants_list': (3, N),  # Number of ants from 3 to N
         'alpha_values': (0.2, 2),  # Alpha (α) from 0.2 to 2
         'beta_values': (0.2, 1),  # Beta (β) from 0.2 to 1
         'evap_coeffs': (0.1, 0.9),  # Evaporation coefficient (ρ) from 0.1 to 0.9
@@ -210,3 +210,5 @@ def define_random_search_ranges(jobs):
     print(param_ranges)
 
     return param_ranges
+
+

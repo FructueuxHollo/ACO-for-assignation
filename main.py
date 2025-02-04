@@ -45,7 +45,7 @@ if all_jobs:
         jobs = create_jobs_from_df(job_data)
     
         # Run ACO
-        optimal_path, total_duration = find_optimal_path(jobs, workers, alpha=3.875, beta=1, evap_coeff=0.7, Q=len(jobs), iterations=100)
+        optimal_path, total_duration, mean_duration = find_optimal_path(jobs, workers, iterations=100 ,verbose=verbose)
     
         # Store the result with path and duration
         results.append({
@@ -58,7 +58,7 @@ if all_jobs:
     for result in sorted(results, key=lambda x: x["total_duration"]):
         print(f"Dataset: {result['job_dataset']}")
         print(f"Optimal Path: {result['optimal_path']}")
-        print(f"Total Duration: {format_duration(result['total_duration'])} hours, minutes, and seconds")  # format as needed
+        print(f"Total Duration: {format_duration(result['total_duration'])}")  # format as needed
         print("\n")
 
 # Usage to retrieve parameter sets
