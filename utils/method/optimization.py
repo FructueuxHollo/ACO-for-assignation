@@ -8,7 +8,7 @@ from random import uniform, choice
 from utils.method.data_treatment import create_matches
 from utils.method.evaluate import format_duration  # Add this import
 
-def find_optimal_path(jobs, workers, num_ants=6, initial_pheromone=0.398, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=0.237, iterations=10, verbose=0):
+def find_optimal_path(jobs, workers, num_ants=28, initial_pheromone=0.886, alpha=0.344, beta=0.233, evap_coeff=0.169, Q=0.463, iterations=10, verbose=0):
     """
     Executes the ACO function multiple times to find the best path with the lowest total duration.
     
@@ -125,7 +125,7 @@ def define_parameter_sets(jobs):
     return initial_pheromones, num_ants_list, alpha_values, beta_values, evap_coeffs, Q_values
 
 
-def random_search_ACO(jobs, workers, param_ranges, num_trials=100, max_iterations=200, inner_iterations=10, tolerance=1e-5):
+def random_search_ACO(jobs, workers, param_ranges, num_trials=100,inner_iterations=100):
     """
     Fine-tunes the ACO algorithm using Random Search.
 
@@ -199,16 +199,117 @@ def define_random_search_ranges(jobs):
 
     # Define parameter ranges
     param_ranges = {
-        'initial_pheromones': (0.1, 1.0),  # τ₀ from 0.1 to 1.0
-        'num_ants_list': (3, N),  # Number of ants from 3 to N
-        'alpha_values': (0.2, 2),  # Alpha (α) from 0.2 to 2
-        'beta_values': (0.2, 1),  # Beta (β) from 0.2 to 1
+        'initial_pheromones': (0.01, 10.0),  # τ₀ from 0.1 to 1.0
+        'num_ants_list': (3, 2*N),  # Number of ants from 3 to N
+        'alpha_values': (0.1, 5),  # Alpha (α) from 0.2 to 2
+        'beta_values': (0.1, 5),  # Beta (β) from 0.2 to 1
         'evap_coeffs': (0.1, 0.9),  # Evaporation coefficient (ρ) from 0.1 to 0.9
-        'Q_values': (0.2, 1)  # Q value scaled to the number of jobs
+        'Q_values': (0.1*N, 10*N)  # Q value scaled to the number of jobs
     }
 
     print(param_ranges)
 
     return param_ranges
 
+def deep_random_search_ACO(jobs, workers, param_ranges, num_trials=100, max_iterations=100, inner_iterations=10, tolerance=1e-5, min_interval_width=1e-2, max_depth=10, log_file="deep_random_search_log.txt"):
+    """
+    Performs a Deep Random Search to fine-tune ACO parameters by recursively narrowing the search space.
+
+    :param jobs: List of job objects.
+    :param workers: List of worker objects.
+    :param param_ranges: Dictionary containing initial ranges for parameters.
+    :param num_trials: Number of random parameter sets to test in each iteration.
+    :param max_iterations: Maximum number of iterations for each ACO run.
+    :param inner_iterations: Number of iterations for find_optimal_path.
+    :param tolerance: Convergence tolerance for each ACO run.
+    :param min_interval_width: Minimum width of the parameter interval to stop recursion.
+    :param max_depth: Maximum recursion depth to prevent infinite loops.
+    :param log_file: Path to file where the results will be logged.
+    :return: Best parameters and their corresponding total duration.
+    """
+    def recursive_random_search(param_ranges, depth=0):
+        # Parameter name mapping
+        param_mapping = {
+            'initial_pheromones': 'initial_pheromone',
+            'num_ants_list': 'num_ants',
+            'alpha_values': 'alpha',
+            'beta_values': 'beta', 
+            'evap_coeffs': 'evap_coeff',
+            'Q_values': 'Q'
+        }
+        
+        # Perform Random Search in the current parameter ranges
+        results = random_search_ACO(
+            jobs=jobs,
+            workers=workers,
+            param_ranges=param_ranges,
+            num_trials=num_trials,
+            max_iterations=max_iterations,
+            inner_iterations=inner_iterations,
+            tolerance=tolerance
+        )
+        
+        # Calculate the mean total duration across all trials
+        total_durations = [r['total_duration'] for r in results]
+        mean_duration = sum(total_durations) / len(total_durations)
+        
+        # Get the best result from the current Random Search
+        best_result = results[0]
+        best_duration = best_result['total_duration']
+        best_params = best_result['parameters']
+
+        # Format and log the best result and the mean duration for the current depth
+        log_line = (f"Depth {depth}: Best Duration = {format_duration(best_duration)} | "
+                    f"Mean Duration = {format_duration(mean_duration)}\nBest Parameters: {best_params}\n")
+        with open(log_file, "a") as f:
+            f.write(log_line)
+        print(log_line)
+
+        # Check if the interval width for all parameters is too small to continue
+        interval_widths = {
+            key: abs(param_ranges[key][1] - param_ranges[key][0])
+            for key in param_ranges
+        }
+        
+        if all(width < min_interval_width for width in interval_widths.values()):
+            log_line = "Stopping recursion: Interval width for all parameters is too small.\n"
+            with open(log_file, "a") as f:
+                f.write(log_line)
+            print(log_line)
+            return best_params, best_duration
+
+        # Also stop if maximum depth is reached
+        if depth >= max_depth:
+            log_line = f"Stopping recursion: Maximum depth of {max_depth} reached.\n"
+            with open(log_file, "a") as f:
+                f.write(log_line)
+            print(log_line)
+            return best_params, best_duration
+
+        # Narrow the parameter ranges around the best candidate
+        new_param_ranges = {}
+        for key, (lower, upper) in param_ranges.items():
+            mapped_key = param_mapping[key]
+            best_value = best_params[mapped_key]
+            if key == 'num_ants_list':  # Handle num_ants (integer) separately
+                new_lower = max(int(best_value - (upper - lower) / 4), lower)
+                new_upper = min(int(best_value + (upper - lower) / 4), upper)
+                if new_lower == new_upper:  # Ensure the interval is at least 1
+                    new_lower = max(new_lower - 1, lower)
+                    new_upper = min(new_upper + 1, upper)
+            else:
+                new_lower = max(best_value - (upper - lower) / 4, lower)
+                new_upper = min(best_value + (upper - lower) / 4, upper)
+            new_param_ranges[key] = (new_lower, new_upper)
+        
+        log_line = f"New parameter ranges: {new_param_ranges}\n"
+        with open(log_file, "a") as f:
+            f.write(log_line)
+        print(log_line)
+
+        # Recursively call the function with the new parameter ranges
+        return recursive_random_search(new_param_ranges, depth + 1)
+
+    # Start the recursive search with the initial parameter ranges
+    return recursive_random_search(param_ranges)
 
