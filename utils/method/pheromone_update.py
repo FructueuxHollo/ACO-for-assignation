@@ -21,7 +21,7 @@ def pheromone_update(ants, matches, evap_coeff, Q):
         num_workers = len(unique_workers)
 
         # Calculate pheromone to deposit (Δτ_ij)
-        pheromone = Q / l * num_workers  # Proportional to the number of workers and inversely proportional to path length
+        pheromone = Q / l * num_workers # Proportional to the number of workers and inversely proportional to path length
 
         for match in matches:
             if match.value in ant.path:  # Check if the job-worker pair was part of the ant's path

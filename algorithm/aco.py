@@ -1,10 +1,10 @@
 import os
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from utils.method.evaluate import evaluate
-from utils.method.pheromone_update import pheromone_update
 from utils.method.generatepath import generate_paths
 from utils.method.visualization import visualize_network
+from utils.method.pheromone_update import pheromone_update
+from utils.method.evaluate import evaluate, format_duration
 
 
 def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations=100, tolerance=1e-5, patience=20, verbose=0, animate=0):
@@ -92,5 +92,5 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
     plt.show()
     
     # Return the best path found and its total processing duration
-    print(total_duration)
+    print(format_duration(total_duration))
     return optimal_path, total_duration
