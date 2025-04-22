@@ -3,7 +3,7 @@ from models.ant import Ant
 from algorithm.aco import ACO
 from utils.method.evaluate import format_duration
 from utils.method.visualization import display_duration_per_worker 
-from utils.options import find_optimal, all_jobs, fine_tune, jobs, verbose, animate
+from utils.options import find_optimal, all_jobs, fine_tune, jobs, verbose, animate, learning_curve
 from utils.method.data_treatment import create_jobs_from_df, create_workers_from_df, create_matches
 from utils.method.optimization import deep_random_search_ACO, define_random_search_ranges, find_optimal_path, fine_tune_ACO, define_parameter_sets, random_search_ACO
 
@@ -13,14 +13,14 @@ workersData = pd.read_csv("data/workers.csv")
 jobs = create_jobs_from_df(jobData)
 workers = create_workers_from_df(workersData)
 
-# matches = create_matches(jobs,workers,0.398)    
-# ants = []
-# for i in range(1, 6):
-#     ants.append(Ant(id=i))
+matches = create_matches(jobs,workers,0.398)    
+ants = []
+for i in range(1, 6):
+    ants.append(Ant(id=i))
 
-# optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=0.237, animate=animate)
+optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=10, animate=animate, learning_curve=learning_curve)
 
-# display_duration_per_worker(optimal_path)
+display_duration_per_worker(optimal_path)
 
 # print("Optimal Path:")
 # for job, worker in optimal_path:

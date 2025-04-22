@@ -1,3 +1,5 @@
+
+
 def pheromone_update(ants, matches, evap_coeff, Q):
     """
     Updates the pheromone levels on the matches based on the ants' paths.
@@ -10,7 +12,7 @@ def pheromone_update(ants, matches, evap_coeff, Q):
     """
     # Evaporate pheromones on all matches
     for match in matches:
-        match.pheromone *= evap_coeff  # Apply evaporation to all pheromone values
+        match.pheromone *= (1-evap_coeff)  # Apply evaporation to all pheromone values
 
     # Update pheromones based on each ant's path
     for ant in ants:
@@ -21,11 +23,23 @@ def pheromone_update(ants, matches, evap_coeff, Q):
         num_workers = len(unique_workers)
 
         # Calculate pheromone to deposit (Δτ_ij)
+        # pheromone = Q / l # Inversely proportional to path length
         pheromone = Q / l * num_workers # Proportional to the number of workers and inversely proportional to path length
 
+        #keep records of the max and min pheromone values for each match
+        max_pheromone = - float('inf')
+        min_pheromone = float('inf')
         for match in matches:
             if match.value in ant.path:  # Check if the job-worker pair was part of the ant's path
                 match.pheromone += pheromone  # Add pheromone based on the ant's contribution
+                if match.pheromone > max_pheromone:
+                    max_pheromone = match.pheromone
+                if match.pheromone < min_pheromone:
+                    min_pheromone = match.pheromone
+        print(f"Max pheromone: {max_pheromone}, Min pheromone: {min_pheromone}")
+        print(f"Ant {ant.id} deposited pheromone: {pheromone}")
+
+                
 
     return matches
 

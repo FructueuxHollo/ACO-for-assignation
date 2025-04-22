@@ -7,7 +7,7 @@ from utils.method.pheromone_update import pheromone_update
 from utils.method.evaluate import evaluate, format_duration
 
 
-def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations=100, tolerance=1e-5, patience=20, verbose=0, animate=0):
+def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations=100, tolerance=1e-5, patience=20, verbose=0, animate=0, learning_curve=0):
     """
     Runs the Ant Colony Optimization (ACO) algorithm to find the optimal job-worker assignments.
     
@@ -23,6 +23,7 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
     :param patience: Number of consecutive iterations without significant improvement before stopping.
     :return: A tuple containing the optimal path and the total processing duration.
     """
+    makespans = []
     previous_duration = float('inf')  # Start with an infinitely large duration
     iteration = 0
     no_improvement_count = 0  # Counter for iterations without significant improvement
@@ -58,6 +59,8 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
         # Evaluate the current best path and its total duration
         optimal_path, total_duration = evaluate(jobs, matches)
 
+        makespans.append(total_duration)
+
         # Calculate the difference in total duration between iterations
         duration_difference = abs(previous_duration - total_duration)
 
@@ -90,6 +93,17 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
         os.rmdir(temp_dir)
 
     plt.show()
+
+    if learning_curve:
+        # Plot the learning curve
+        plt.figure(figsize=(10, 6))
+        plt.plot(range(len(makespans)), makespans, marker='o')
+        plt.title("Learning Curve of ACO")
+        plt.xlabel("Iteration")
+        plt.ylabel("Makespan (Total Duration)")
+        plt.grid()
+        plt.savefig("output/learning_curve.png", dpi=300)
+        plt.show()
     
     # Return the best path found and its total processing duration
     print(format_duration(total_duration))
