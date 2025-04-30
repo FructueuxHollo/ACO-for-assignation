@@ -36,24 +36,3 @@ Best Duration: 4 hours 50 minutes 40 seconds | Mean Duration: 5 hours 14 minutes
 Best Duration: 4 hours 50 minutes 40 seconds | Mean Duration: 5 hours 17 minutes 02 seconds | Parameters: Initial Pheromone: 0.727, Num Ants: 40, Alpha: 1.345, Beta: 0.359, Evap Coeff: 0.322, Q: 0.650
 Best Duration: 4 hours 50 minutes 40 seconds | Mean Duration: 5 hours 18 minutes 02 seconds | Parameters: Initial Pheromone: 0.714, Num Ants: 27, Alpha: 0.491, Beta: 0.477, Evap Coeff: 0.215, Q: 0.515
 Best Duration: 4 hours 50 minutes 40 seconds | Mean Duration: 5 hours 19 minutes 47 seconds | Parameters: Initial Pheromone: 0.800, Num Ants: 73, Alpha: 1.578, Beta: 0.350, Evap Coeff: 0.230, Q: 0.665
-
-
-
-
-Method: Deep Random search (depth 5)
-
-Job: 27
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 26 minutes 03 seconds | Parameters: Initial Pheromone: 0.252, Num Ants: 19, Alpha: 1.616, Beta: 0.201, Evap Coeff: 0.657, Q: 0.890
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 26 minutes 44 seconds | Parameters: Initial Pheromone: 0.237, Num Ants: 19, Alpha: 1.622, Beta: 0.202, Evap Coeff: 0.636, Q: 0.899
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 26 minutes 48 seconds | Parameters: Initial Pheromone: 0.249, Num Ants: 18, Alpha: 1.627, Beta: 0.201, Evap Coeff: 0.659, Q: 0.890
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 08 seconds | Parameters: Initial Pheromone: 0.250, Num Ants: 18, Alpha: 1.615, Beta: 0.212, Evap Coeff: 0.637, Q: 0.889
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 12 seconds | Parameters: Initial Pheromone: 0.238, Num Ants: 18, Alpha: 1.652, Beta: 0.208, Evap Coeff: 0.647, Q: 0.896
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 28 seconds | Parameters: Initial Pheromone: 0.240, Num Ants: 18, Alpha: 1.614, Beta: 0.202, Evap Coeff: 0.644, Q: 0.899
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 30 seconds | Parameters: Initial Pheromone: 0.249, Num Ants: 18, Alpha: 1.610, Beta: 0.210, Evap Coeff: 0.644, Q: 0.903
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 34 seconds | Parameters: Initial Pheromone: 0.240, Num Ants: 19, Alpha: 1.639, Beta: 0.201, Evap Coeff: 0.636, Q: 0.894
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 35 seconds | Parameters: Initial Pheromone: 0.239, Num Ants: 19, Alpha: 1.666, Beta: 0.202, Evap Coeff: 0.633, Q: 0.905
-Best Duration: 1 hours 23 minutes 15 seconds | Mean Duration: 1 hours 27 minutes 41 seconds | Parameters: Initial Pheromone: 0.260, Num Ants: 18, Alpha: 1.650, Beta: 0.205, Evap Coeff: 0.661, Q: 0.908
-
-Depth 3: Best Duration = 1 hours 23 minutes 15 seconds | Mean Duration = 1 hours 24 minutes 24 seconds
-Best Parameters: {'initial_pheromone': 0.7142683983807012, 'num_ants': 10, 'alpha': 0.5465770746377655, 'beta': 0.25628802267235457, 'evap_coeff': 0.5605046582447155, 'Q': 0.9522447861423565}
-New parameter ranges: {'initial_pheromones': (0.7006000618806137, 0.7279367348807887), 'num_ants_list': (9, 10), 'alpha_values': (0.5239951606964484, 0.5846872263233462), 'beta_values': (0.24912810531606788, 0.2661958169499844), 'evap_coeffs': (0.5482149088568701, 0.572794407632561), 'Q_values': (0.9385154312465149, 0.9659741410381981)}

@@ -126,16 +126,27 @@ def convert_to_seconds(value):
     except ValueError:
         return float(value)
 
+# def create_matches(jobs,workers,pheromone,VERBOSE = 0):
+#     #list to create matches
+#     matches = []
+    
+#     for job in jobs: 
+#         for worker in workers:
+#             # Check if the worker meets the conditions to handle the job
+#             if worker.can_handle_job(job):
+#                 match = Match(value=(job,worker),pheromone=pheromone)
+#                 matches.append(match)
+#                 # if VERBOSE:
+#                 #     print(f"{job.name} {worker.name}")
+#             else:
+#                 if VERBOSE:
+#                     print(f"{job.name} {worker.name} not possible")
+#     return matches
 def create_matches(jobs,workers,pheromone,VERBOSE = 0):
     #list to create matches
     matches = []
-    
     for job in jobs: 
         for worker in workers:
-            # Check if the worker meets the conditions to handle the job
-            if worker.can_handle_job(job):
-                match = Match(value=(job,worker),pheromone=pheromone)
-                matches.append(match)
-                if VERBOSE:
-                    print(f"{job.name} {worker.name}")
+            match = Match(value=(job,worker),pheromone=pheromone)
+            matches.append(match)
     return matches

@@ -2,13 +2,14 @@ import numpy as np
 from tqdm import tqdm
 from models.ant import Ant
 from itertools import product
-from algorithm.aco import ACO
+# from algorithm.aco import ACO
+from algorithm.aco_elitist_minmax import ACO_elitist_minmax as ACO
 from utils.options import jobs 
 from random import uniform, choice
 from utils.method.data_treatment import create_matches
 from utils.method.evaluate import format_duration  # Add this import
 
-def find_optimal_path(jobs, workers, num_ants=28, initial_pheromone=0.886, alpha=0.344, beta=0.233, evap_coeff=0.169, Q=0.463, iterations=10, verbose=0):
+def find_optimal_path(jobs, workers, num_ants=5, initial_pheromone=0.554, alpha=1.182, beta=0.497, evap_coeff=0.892, Q=75.021, iterations=10, verbose=0):
     """
     Executes the ACO function multiple times to find the best path with the lowest total duration.
     
@@ -151,6 +152,16 @@ def random_search_ACO(jobs, workers, param_ranges, num_trials=100,inner_iteratio
         evap_coeff = uniform(*param_ranges['evap_coeffs'])
         Q = uniform(*param_ranges['Q_values'])
 
+        # # run ACO with the sampled parameters
+        # # Create matches for the current initial pheromone level
+        # matches = create_matches(jobs, workers, initial_pheromone)
+       
+        # # Create ants for the current number of ants
+        # ants = [Ant(id=i) for i in range(1, num_ants + 1)]
+        
+        # # Run the ACO algorithm with the current combination of parameters
+        # optimal_path, total_duration = ACO(jobs, workers,  matches, ants, alpha, beta, evap_coeff, Q, inner_iterations, patience= 10)
+
         # Use find_optimal_path instead of single ACO run
         optimal_path, total_duration, mean_duration = find_optimal_path(
             jobs=jobs,
@@ -161,13 +172,11 @@ def random_search_ACO(jobs, workers, param_ranges, num_trials=100,inner_iteratio
             beta=beta,
             evap_coeff=evap_coeff,
             Q=Q,
-            iterations=inner_iterations
         )
 
         # Store the result with parameters
         results.append({
             'total_duration': total_duration,
-            'mean_duration': mean_duration,
             'parameters': {
                 'initial_pheromone': initial_pheromone,
                 'num_ants': num_ants,
@@ -179,14 +188,13 @@ def random_search_ACO(jobs, workers, param_ranges, num_trials=100,inner_iteratio
         })
 
     # Sort results by both total duration and mean duration
-    results.sort(key=lambda x: (x['total_duration'], x['mean_duration']))
+    results.sort(key=lambda x: (x['total_duration']))
 
     # Print sorted results
     for result in results[:10]:  # Show only the top 10 configurations
         params = result['parameters']
         formatted_duration = format_duration(result['total_duration'])
-        formatted_mean = format_duration(result['mean_duration'])
-        print(f"Best Duration: {formatted_duration} | Mean Duration: {formatted_mean} | "
+        print(f"Best Duration: {formatted_duration} | "
               f"Parameters: Initial Pheromone: {params['initial_pheromone']:.3f}, "
               f"Num Ants: {params['num_ants']}, Alpha: {params['alpha']:.3f}, Beta: {params['beta']:.3f}, "
               f"Evap Coeff: {params['evap_coeff']:.3f}, Q: {params['Q']:.3f}")
@@ -206,9 +214,6 @@ def define_random_search_ranges(jobs):
         'evap_coeffs': (0.1, 0.9),  # Evaporation coefficient (ρ) from 0.1 to 0.9
         'Q_values': (0.1*N, 10*N)  # Q value scaled to the number of jobs
     }
-
-    print(param_ranges)
-
     return param_ranges
 
 def deep_random_search_ACO(jobs, workers, param_ranges, num_trials=100, max_iterations=100, inner_iterations=10, tolerance=1e-5, min_interval_width=1e-2, max_depth=10, log_file="deep_random_search_log.txt"):
