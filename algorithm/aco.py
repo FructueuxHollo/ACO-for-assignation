@@ -23,6 +23,8 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
     :param patience: Number of consecutive iterations without significant improvement before stopping.
     :return: A tuple containing the optimal path and the total processing duration.
     """
+    best_global_path = []
+    best_global_length = float('inf')
     makespans = []
     previous_duration = float('inf')  # Start with an infinitely large duration
     iteration = 0
@@ -57,12 +59,15 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
             frames.append(filename)
 
         # Evaluate the current best path and its total duration
-        optimal_path, total_duration = evaluate(jobs, matches)
+        current_path, current_length = evaluate(jobs, matches)
+        makespans.append(current_length)
 
-        makespans.append(total_duration)
+        # 6) Update global best if improved
+        if current_length < best_global_length:
+            best_global_path, best_global_length = current_path, current_length
 
         # Calculate the difference in total duration between iterations
-        duration_difference = abs(previous_duration - total_duration)
+        duration_difference = abs(previous_duration - current_length)
 
         # Check if the difference is below the tolerance (convergence criteria)
         if duration_difference < tolerance:
@@ -73,12 +78,11 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
         # If there has been no significant improvement for a certain number of iterations, break
         if no_improvement_count >= patience:
             if verbose:
-                print(f"No significant improvement for {patience} consecutive iterations. Stopping.")
-                print(f"Converged at iteration {iteration} with duration difference {duration_difference}")
+                print(f"No improvement for {patience} iterations. Stopping at iter {iteration}.")
             break
 
         # Update previous duration and increment iteration counter
-        previous_duration = total_duration
+        previous_duration = current_length
         iteration += 1
 
     if animate:
@@ -105,6 +109,7 @@ def ACO(jobs, workers, matches, ants, alpha, beta, evap_coeff, Q, max_iterations
         plt.savefig("output/learning_curve.png", dpi=300)
         plt.show()
     
-    # Return the best path found and its total processing duration
-    print(format_duration(total_duration))
-    return optimal_path, total_duration
+    # Final output
+    if verbose:
+        print(f"Best makespan: {format_duration(best_global_length)}")
+    return best_global_path, best_global_length

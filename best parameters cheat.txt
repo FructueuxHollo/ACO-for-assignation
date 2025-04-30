@@ -1,0 +1,59 @@
+current performance obtained with Parameters: Initial Pheromone: , Num Ants: , Alpha: , Beta: , Evap Coeff: , Q: 
+
+Method: Random search 
+
+Job: 27
+
+Best Duration: 0 hours 42 minutes 32 seconds | Parameters: Initial Pheromone: 2.459, Num Ants: 03, Alpha: 0.818, Beta: 2.083, Evap Coeff: 0.649, Q: 203.017
+Best Duration: 0 hours 44 minutes 33 seconds | Parameters: Initial Pheromone: 9.188, Num Ants: 04, Alpha: 1.748, Beta: 1.373, Evap Coeff: 0.175, Q: 36.988
+Best Duration: 0 hours 44 minutes 33 seconds | Parameters: Initial Pheromone: 6.460, Num Ants: 04, Alpha: 4.692, Beta: 0.957, Evap Coeff: 0.101, Q: 140.556
+Best Duration: 0 hours 44 minutes 43 seconds | Parameters: Initial Pheromone: 8.582, Num Ants: 04, Alpha: 2.715, Beta: 2.299, Evap Coeff: 0.131, Q: 32.886
+Best Duration: 0 hours 45 minutes 17 seconds | Parameters: Initial Pheromone: 1.551, Num Ants: 04, Alpha: 1.413, Beta: 0.397, Evap Coeff: 0.659, Q: 167.219
+Best Duration: 0 hours 45 minutes 29 seconds | Parameters: Initial Pheromone: 0.842, Num Ants: 06, Alpha: 3.781, Beta: 1.320, Evap Coeff: 0.737, Q: 67.384
+Best Duration: 0 hours 46 minutes 16 seconds | Parameters: Initial Pheromone: 2.666, Num Ants: 04, Alpha: 4.269, Beta: 4.284, Evap Coeff: 0.649, Q: 207.211
+Best Duration: 0 hours 46 minutes 53 seconds | Parameters: Initial Pheromone: 1.565, Num Ants: 04, Alpha: 1.408, Beta: 1.833, Evap Coeff: 0.630, Q: 143.830
+Best Duration: 0 hours 47 minutes 25 seconds | Parameters: Initial Pheromone: 8.083, Num Ants: 04, Alpha: 1.879, Beta: 3.802, Evap Coeff: 0.285, Q: 93.619
+Best Duration: 0 hours 48 minutes 16 seconds | Parameters: Initial Pheromone: 0.529, Num Ants: 03, Alpha: 1.406, Beta: 2.634, Evap Coeff: 0.456, Q: 185.386
+Best Duration: 0 hours 50 minutes 07 seconds | Parameters: Initial Pheromone: 1.397, Num Ants: 03, Alpha: 2.703, Beta: 2.661, Evap Coeff: 0.709, Q: 183.628
+Best Duration: 0 hours 50 minutes 17 seconds | Parameters: Initial Pheromone: 2.172, Num Ants: 05, Alpha: 1.312, Beta: 1.574, Evap Coeff: 0.474, Q: 50.212
+Best Duration: 0 hours 50 minutes 37 seconds | Parameters: Initial Pheromone: 9.905, Num Ants: 04, Alpha: 2.618, Beta: 4.557, Evap Coeff: 0.665, Q: 10.539
+Best Duration: 0 hours 50 minutes 37 seconds | Parameters: Initial Pheromone: 1.592, Num Ants: 07, Alpha: 4.185, Beta: 3.942, Evap Coeff: 0.285, Q: 112.526
+Best Duration: 0 hours 50 minutes 43 seconds | Parameters: Initial Pheromone: 4.002, Num Ants: 03, Alpha: 3.423, Beta: 4.211, Evap Coeff: 0.498, Q: 205.454
+Best Duration: 0 hours 50 minutes 45 seconds | Parameters: Initial Pheromone: 0.946, Num Ants: 04, Alpha: 3.702, Beta: 4.583, Evap Coeff: 0.129, Q: 163.368
+Best Duration: 0 hours 51 minutes 04 seconds | Parameters: Initial Pheromone: 9.184, Num Ants: 07, Alpha: 2.033, Beta: 1.281, Evap Coeff: 0.274, Q: 157.515
+Best Duration: 0 hours 51 minutes 05 seconds | Parameters: Initial Pheromone: 2.984, Num Ants: 05, Alpha: 0.904, Beta: 4.187, Evap Coeff: 0.599, Q: 132.976
+Best Duration: 0 hours 51 minutes 05 seconds | Parameters: Initial Pheromone: 2.116, Num Ants: 06, Alpha: 4.194, Beta: 4.768, Evap Coeff: 0.701, Q: 183.676
+Best Duration: 0 hours 51 minutes 15 seconds | Parameters: Initial Pheromone: 5.330, Num Ants: 04, Alpha: 1.848, Beta: 4.035, Evap Coeff: 0.558, Q: 161.594
+Best Duration: 0 hours 51 minutes 31 seconds | Parameters: Initial Pheromone: 1.141, Num Ants: 09, Alpha: 4.537, Beta: 4.106, Evap Coeff: 0.653, Q: 85.626
+Best Duration: 0 hours 51 minutes 44 seconds | Parameters: Initial Pheromone: 4.601, Num Ants: 04, Alpha: 4.501, Beta: 4.383, Evap Coeff: 0.812, Q: 240.022
+Best Duration: 0 hours 52 minutes 49 seconds | Parameters: Initial Pheromone: 2.430, Num Ants: 06, Alpha: 2.278, Beta: 4.629, Evap Coeff: 0.704, Q: 163.178
+Best Duration: 0 hours 52 minutes 49 seconds | Parameters: Initial Pheromone: 6.766, Num Ants: 03, Alpha: 3.814, Beta: 4.023, Evap Coeff: 0.469, Q: 17.952
+Best Duration: 0 hours 53 minutes 02 seconds | Parameters: Initial Pheromone: 6.033, Num Ants: 07, Alpha: 1.756, Beta: 2.245, Evap Coeff: 0.699, Q: 253.326
+Best Duration: 0 hours 53 minutes 02 seconds | Parameters: Initial Pheromone: 9.148, Num Ants: 05, Alpha: 2.615, Beta: 3.901, Evap Coeff: 0.748, Q: 53.180
+Best Duration: 0 hours 54 minutes 21 seconds | Parameters: Initial Pheromone: 5.389, Num Ants: 06, Alpha: 3.082, Beta: 0.963, Evap Coeff: 0.270, Q: 107.804
+Best Duration: 0 hours 55 minutes 12 seconds | Parameters: Initial Pheromone: 4.342, Num Ants: 04, Alpha: 0.409, Beta: 1.876, Evap Coeff: 0.818, Q: 54.083
+Best Duration: 0 hours 55 minutes 24 seconds | Parameters: Initial Pheromone: 7.047, Num Ants: 05, Alpha: 3.419, Beta: 4.862, Evap Coeff: 0.473, Q: 62.542
+Best Duration: 0 hours 56 minutes 04 seconds | Parameters: Initial Pheromone: 4.451, Num Ants: 03, Alpha: 1.590, Beta: 4.570, Evap Coeff: 0.445, Q: 145.168
+
+Job: 63
+
+Best Duration: 1 hours 32 minutes 46 seconds | Parameters: Initial Pheromone: 0.554, Num Ants: 05, Alpha: 1.182, Beta: 0.497, Evap Coeff: 0.892, Q: 75.021
+Best Duration: 1 hours 36 minutes 09 seconds | Parameters: Initial Pheromone: 9.505, Num Ants: 03, Alpha: 2.893, Beta: 1.241, Evap Coeff: 0.386, Q: 570.263
+Best Duration: 1 hours 38 minutes 47 seconds | Parameters: Initial Pheromone: 5.925, Num Ants: 03, Alpha: 2.227, Beta: 1.668, Evap Coeff: 0.275, Q: 147.096
+Best Duration: 1 hours 47 minutes 13 seconds | Parameters: Initial Pheromone: 7.682, Num Ants: 07, Alpha: 4.740, Beta: 0.589, Evap Coeff: 0.670, Q: 533.438
+Best Duration: 1 hours 49 minutes 56 seconds | Parameters: Initial Pheromone: 0.437, Num Ants: 05, Alpha: 3.445, Beta: 0.247, Evap Coeff: 0.622, Q: 113.300
+Best Duration: 1 hours 52 minutes 17 seconds | Parameters: Initial Pheromone: 0.187, Num Ants: 04, Alpha: 2.041, Beta: 2.898, Evap Coeff: 0.225, Q: 267.422
+Best Duration: 1 hours 53 minutes 16 seconds | Parameters: Initial Pheromone: 0.076, Num Ants: 08, Alpha: 4.325, Beta: 0.260, Evap Coeff: 0.545, Q: 392.432
+Best Duration: 1 hours 57 minutes 42 seconds | Parameters: Initial Pheromone: 1.932, Num Ants: 06, Alpha: 4.892, Beta: 2.226, Evap Coeff: 0.384, Q: 211.251
+Best Duration: 1 hours 59 minutes 41 seconds | Parameters: Initial Pheromone: 7.236, Num Ants: 04, Alpha: 2.030, Beta: 4.433, Evap Coeff: 0.340, Q: 305.677
+Best Duration: 2 hours 00 minutes 05 seconds | Parameters: Initial Pheromone: 4.818, Num Ants: 04, Alpha: 3.957, Beta: 4.045, Evap Coeff: 0.394, Q: 58.454
+Best Duration: 2 hours 00 minutes 38 seconds | Parameters: Initial Pheromone: 6.742, Num Ants: 06, Alpha: 1.362, Beta: 4.257, Evap Coeff: 0.651, Q: 488.742
+Best Duration: 2 hours 03 minutes 34 seconds | Parameters: Initial Pheromone: 0.739, Num Ants: 04, Alpha: 3.411, Beta: 4.671, Evap Coeff: 0.787, Q: 524.059
+Best Duration: 2 hours 05 minutes 24 seconds | Parameters: Initial Pheromone: 5.949, Num Ants: 05, Alpha: 2.137, Beta: 2.373, Evap Coeff: 0.302, Q: 166.955
+Best Duration: 2 hours 04 minutes 16 seconds | Parameters: Initial Pheromone: 2.716, Num Ants: 06, Alpha: 1.724, Beta: 2.729, Evap Coeff: 0.848, Q: 536.281
+Best Duration: 2 hours 05 minutes 24 seconds | Parameters: Initial Pheromone: 2.104, Num Ants: 07, Alpha: 2.464, Beta: 3.820, Evap Coeff: 0.553, Q: 454.665
+Best Duration: 2 hours 10 minutes 23 seconds | Parameters: Initial Pheromone: 0.407, Num Ants: 07, Alpha: 0.123, Beta: 3.307, Evap Coeff: 0.224, Q: 433.781
+Best Duration: 2 hours 10 minutes 40 seconds | Parameters: Initial Pheromone: 5.179, Num Ants: 08, Alpha: 0.222, Beta: 3.100, Evap Coeff: 0.458, Q: 448.717
+Best Duration: 2 hours 15 minutes 12 seconds | Parameters: Initial Pheromone: 5.205, Num Ants: 10, Alpha: 0.241, Beta: 3.320, Evap Coeff: 0.510, Q: 263.585
+Best Duration: 2 hours 18 minutes 44 seconds | Parameters: Initial Pheromone: 1.048, Num Ants: 10, Alpha: 4.120, Beta: 1.173, Evap Coeff: 0.600, Q: 240.901
+Best Duration: 2 hours 22 minutes 13 seconds | Parameters: Initial Pheromone: 2.125, Num Ants: 13, Alpha: 1.850, Beta: 3.997, Evap Coeff: 0.851, Q: 423.943

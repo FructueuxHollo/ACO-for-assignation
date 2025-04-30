@@ -1,6 +1,7 @@
 import pandas as pd
 from models.ant import Ant
-from algorithm.aco import ACO
+# from algorithm.aco import ACO
+from algorithm.aco_elitist_minmax import ACO_elitist_minmax as ACO
 from utils.method.evaluate import format_duration
 from utils.method.visualization import display_duration_per_worker 
 from utils.options import find_optimal, all_jobs, fine_tune, jobs, verbose, animate, learning_curve
@@ -13,14 +14,14 @@ workersData = pd.read_csv("data/workers.csv")
 jobs = create_jobs_from_df(jobData)
 workers = create_workers_from_df(workersData)
 
-matches = create_matches(jobs,workers,0.398)    
-ants = []
-for i in range(1, 6):
-    ants.append(Ant(id=i))
+# matches = create_matches(jobs,workers,0.398, VERBOSE=1)    
+# ants = []
+# for i in range(1, 7):
+#     ants.append(Ant(id=i))
 
-optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=10, animate=animate, learning_curve=learning_curve)
+# optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=10, animate=animate, learning_curve=learning_curve, verbose=1, max_iterations=500)
 
-display_duration_per_worker(optimal_path)
+# display_duration_per_worker(optimal_path)
 
 # print("Optimal Path:")
 # for job, worker in optimal_path:
@@ -34,7 +35,7 @@ if find_optimal:
 
 if all_jobs:
     # Define dataset paths
-    job_datasets = [f"data/jobs{i}.csv" for i in range(18, 91, 9)]
+    job_datasets = [f"data/jobs{i}.csv" for i in range(9, 91, 9)]
     
     results = []
     
@@ -44,7 +45,7 @@ if all_jobs:
         jobs = create_jobs_from_df(job_data)
     
         # Run ACO
-        optimal_path, total_duration, mean_duration = find_optimal_path(jobs, workers, iterations=100 ,verbose=verbose)
+        optimal_path, total_duration, mean_duration = find_optimal_path(jobs, workers ,verbose=verbose)
     
         # Store the result with path and duration
         results.append({
@@ -60,11 +61,11 @@ if all_jobs:
         print(f"Total Duration: {format_duration(result['total_duration'])}")  # format as needed
         print("\n")
 
-# Usage to retrieve parameter sets
-# initial_pheromones, num_ants_list, alpha_values, beta_values, evap_coeffs, Q_values = define_parameter_sets(jobs, workers)
-param_ranges = define_random_search_ranges(jobs)
 
 if fine_tune:
+    # Usage to retrieve parameter sets
+    # initial_pheromones, num_ants_list, alpha_values, beta_values, evap_coeffs, Q_values = define_parameter_sets(jobs, workers)
+    param_ranges = define_random_search_ranges(jobs)
     if verbose: 
         print("Initial Pheromones:", param_ranges['initial_pheromones'])
         print("Number of Ants:", param_ranges["num_ants_list"])

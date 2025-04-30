@@ -1,5 +1,3 @@
-
-
 def pheromone_update(ants, matches, evap_coeff, Q):
     """
     Updates the pheromone levels on the matches based on the ants' paths.
@@ -26,22 +24,69 @@ def pheromone_update(ants, matches, evap_coeff, Q):
         # pheromone = Q / l # Inversely proportional to path length
         pheromone = Q / l * num_workers # Proportional to the number of workers and inversely proportional to path length
 
-        #keep records of the max and min pheromone values for each match
-        max_pheromone = - float('inf')
-        min_pheromone = float('inf')
         for match in matches:
             if match.value in ant.path:  # Check if the job-worker pair was part of the ant's path
-                match.pheromone += pheromone  # Add pheromone based on the ant's contribution
-                if match.pheromone > max_pheromone:
-                    max_pheromone = match.pheromone
-                if match.pheromone < min_pheromone:
-                    min_pheromone = match.pheromone
-        print(f"Max pheromone: {max_pheromone}, Min pheromone: {min_pheromone}")
-        print(f"Ant {ant.id} deposited pheromone: {pheromone}")
-
-                
+                match.pheromone += pheromone  # Add pheromone based on the ant's contribution                
 
     return matches
+
+
+
+def pheromone_update_minmax(ants,
+                            matches,
+                            evap_coeff,
+                            Q,
+                            best_global_path,
+                            best_global_length,
+                            tau_min,
+                            tau_max):
+    """
+    Mise à jour Min–Max + élitiste des phéromones.
+    - matches : liste d’objets Match
+    - ants : listes de fourmis
+    - evap_coeff : ρ
+    - Q : constante de dépôt
+    - best_global_path : liste de (job,worker) de la meilleure solution vue
+    - best_global_length : makespan de cette solution
+    - tau_min, tau_max : bornes de clamp
+    """
+    # 1) Évaporation + clamp
+    for m in matches:
+        m.pheromone = (1 - evap_coeff) * m.pheromone
+        m.pheromone = min(max(m.pheromone, tau_min), tau_max)
+
+    # 2) Dépôt standard par chaque fourmi
+    for ant in ants:
+        Lk = max_worker_processing_duration(ant.path)
+        num_workers = len({w for _, w in ant.path})
+        delta = Q / Lk * num_workers
+
+        for m in matches:
+            if m.value in ant.path:
+                m.pheromone += delta
+                m.pheromone = min(max(m.pheromone, tau_min), tau_max)
+
+    # # 3) Dépôt élitiste sur best_global_path
+    # delta_elite = Q / best_global_length
+    # for (job, worker) in best_global_path:
+    #     # on trouve l’objet Match correspondant
+    #     for m in matches:
+    #         if m.value == (job, worker):
+    #             m.pheromone += delta_elite
+    #             m.pheromone = min(max(m.pheromone, tau_min), tau_max)
+    #             break
+
+    return matches
+
+def init_min_max_pheromones(rho, best_length, n_decisions, p_best=0.05):
+    """
+    Calcule tau_max et tau_min selon Stützle & Hoos.
+    n_decisions = nombre de choix (p.ex. len(jobs))
+    p_best = probabilité de choisir la meilleure solution
+    """
+    tau_max = 1.0 / (rho * best_length)
+    tau_min = (tau_max * (1 - p_best**(1/n_decisions))) / ((n_decisions/2 - 1) * p_best**(1/n_decisions))
+    return tau_min, tau_max
 
 def max_worker_processing_duration(path):
     """
@@ -71,6 +116,72 @@ def max_worker_processing_duration(path):
 
     return max_duration
 
+# def calculate_worker_duration(jobs, worker):
+#     """
+#     Calculates the total duration for a worker considering simultaneous job execution
+#     based on the worker's available resources (memory, disk, CPU cores).
+    
+#     :param jobs: List of jobs assigned to the worker.
+#     :param worker: The worker object with available resources (memory, disk, cores).
+#     :return: The total time required for the worker to complete all jobs.
+#     """
+#     # Sort jobs by their processing duration as a heuristic to allocate resources efficiently
+#     jobs = sorted(jobs, key=lambda job: job.standard_processing_durations[worker.name])
+
+#     total_time = 0
+#     # Initialize available resources for the worker
+#     available_memory = worker.available_memory_size
+#     available_disk = worker.available_disk_size
+#     available_cores = worker.cpu_info.number_of_cores
+
+#     # List of jobs that are executing in parallel with their remaining durations
+#     executing_jobs = []
+
+#     # List to track remaining job processing times
+#     remaining_durations = {job: job.standard_processing_durations[worker.name] for job in jobs}
+
+#     while jobs or executing_jobs:
+#         # Try to allocate more jobs to be executed in parallel
+#         remaining_jobs = []
+#         for job in jobs:
+#             # Check if the worker can handle this job along with the currently executing jobs
+#             if (available_memory >= job.required_memory_size_for_execution and
+#                 available_disk >= job.required_disk_size_for_execution and
+#                 available_cores >= job.thread_process_count):
+                
+#                 # If the worker can handle this job, add it to the executing jobs
+#                 executing_jobs.append(job)
+#                 available_memory -= job.required_memory_size_for_execution
+#                 available_disk -= job.required_disk_size_for_execution
+#                 available_cores -= job.thread_process_count
+#             else:
+#                 # If the worker can't handle it, put it back in the remaining jobs
+#                 remaining_jobs.append(job)
+
+#         # If no jobs are currently executing, we advance time by the duration of the job that finishes next
+#         if executing_jobs:
+#             # Find the job with the shortest remaining processing time in the current executing jobs
+#             min_duration = min(remaining_durations[job] for job in executing_jobs)
+#             total_time += min_duration
+
+#             # Remove completed jobs and update available resources
+#             completed_jobs = []
+#             for job in executing_jobs:
+#                 remaining_durations[job] -= min_duration  # Reduce the remaining duration for this job
+#                 if remaining_durations[job] == 0:  # Job has finished
+#                     available_memory += job.required_memory_size_for_execution
+#                     available_disk += job.required_disk_size_for_execution
+#                     available_cores += job.thread_process_count
+#                     completed_jobs.append(job)
+
+#             # Remove completed jobs from the executing list
+#             executing_jobs = [job for job in executing_jobs if job not in completed_jobs]
+
+#         # Update the jobs list with the remaining jobs for the next iteration
+#         jobs = remaining_jobs
+
+#     return total_time
+
 def calculate_worker_duration(jobs, worker):
     """
     Calculates the total duration for a worker considering simultaneous job execution
@@ -85,9 +196,11 @@ def calculate_worker_duration(jobs, worker):
 
     total_time = 0
     # Initialize available resources for the worker
+    # available_memory = 8.0 * 1024 * 1024 * 1024  # Example: 8 GB in bytes
+    # available_disk = 64.0 * 1024 * 1024 * 1024  # Example: 64 GB in bytes
     available_memory = worker.available_memory_size
     available_disk = worker.available_disk_size
-    available_cores = worker.cpu_info.number_of_cores
+    available_cores = 20
 
     # List of jobs that are executing in parallel with their remaining durations
     executing_jobs = []
