@@ -14,14 +14,14 @@ workersData = pd.read_csv("data/workers.csv")
 jobs = create_jobs_from_df(jobData)
 workers = create_workers_from_df(workersData)
 
-# matches = create_matches(jobs,workers,0.398, VERBOSE=1)    
-# ants = []
-# for i in range(1, 7):
-#     ants.append(Ant(id=i))
+matches = create_matches(jobs,workers,0.554)    
+ants = []
+for i in range(1, 6):
+    ants.append(Ant(id=i))
 
-# optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.913, beta=0.462, evap_coeff=0.133, Q=10, animate=animate, learning_curve=learning_curve, verbose=1, max_iterations=500)
+optimal_path, total_duration = ACO(jobs, workers, matches, ants, alpha=1.182, beta=0.497, evap_coeff=0.892, Q=75.021, animate=animate, learning_curve=learning_curve, max_iterations=5000000, verbose=1, patience=5000)
 
-# display_duration_per_worker(optimal_path)
+display_duration_per_worker(optimal_path)
 
 # print("Optimal Path:")
 # for job, worker in optimal_path:
